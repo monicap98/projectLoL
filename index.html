@@ -1,0 +1,473 @@
+<!-- Code by Leviner222 -->
+<!DOCTYPE html>
+<html lang="en">	
+	<head>
+		<link rel="icon" type="image/png" href="assets/favicon.png"/>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<title>Legue of Legends Champions</title>
+
+		<!-- Impor JQuery -->
+		<script
+			src="https://code.jquery.com/jquery-3.4.1.js"
+			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			crossorigin="anonymous">
+		</script>
+
+		<!-- Impor FireBase -->
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase.js"></script>
+
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+			type="text/css"
+			rel="stylesheet"
+		/>
+
+		<!-- Matomo Analytics -->
+		<script type="text/javascript">
+			var _paq = window._paq = window._paq || [];
+			_paq.push(['trackPageView']);
+			_paq.push(['enableLinkTracking']);
+			(function() {
+			var u="https://lolchampions.matomo.cloud/";
+			_paq.push(['setTrackerUrl', u+'matomo.php']);
+			_paq.push(['setSiteId', '1']);
+			var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+			g.type='text/javascript'; g.async=true; g.src='//cdn.matomo.cloud/lolchampions.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+			})();
+		</script>
+		
+
+		<!-- Import Vue.js style -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+		<link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css">
+		<link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css">
+
+		<!-- Import my files -->
+		<script type="text/javascript" src="assets/script.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/style.css" />
+
+	</head>		
+	<body>
+		<div id="loading">
+			<img id="loading-image" src="assets/loading.gif" alt="Loading..." />
+		</div>
+
+		<div id='appDiv'>
+
+			<md-app id="app">				
+				<md-app-toolbar class="md-primary">
+					<md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+						<md-icon>menu</md-icon>
+					</md-button>
+					<span class="md-title">{{ title }}</span>
+				</md-app-toolbar>
+				
+				<md-app-drawer :md-active.sync="menuVisible" md-persistent="mini">
+					<md-toolbar class="md-transparent" md-elevation="0">
+						<span>Menu</span>
+
+						<md-divider class="md-inset" ></md-divider>
+
+						<div class="md-toolbar-section-end">
+							
+							<md-button class="md-icon-button md-dense" @click="menuVisible = !menuVisible">
+							  <md-icon>keyboard_arrow_left</md-icon>
+							</md-button>
+						</div>					
+					</md-toolbar>
+					
+					<md-divider></md-divider>
+
+					<md-list>
+						<md-list-item to='/'>
+							<md-icon>gamepad</md-icon>
+							<span class="md-list-item-text">Tutti i campioni</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/tiratore'>
+							<md-icon>gps_fixed</md-icon>
+							<span class="md-list-item-text">Tiratore</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/mago'>
+							<md-icon>opacity</md-icon>
+							<span class="md-list-item-text">Mago</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/assassino'>
+							<md-icon>clear</md-icon>
+							<span class="md-list-item-text">Assassino</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/tank'>
+							<md-icon>flash_on</md-icon>
+							<span class="md-list-item-text">Tank</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/combattente'>
+							<md-icon>local_fire_department</md-icon>
+							<span class="md-list-item-text">Combattente</span>
+						</md-list-item>
+					</md-list>
+
+					<md-list>
+						<md-list-item to='/filteredList/supporto'>
+							<md-icon>support</md-icon>
+							<span class="md-list-item-text">Supporto</span>
+							<md-divider class="md-inset"></md-divider>
+						</md-list-item>
+					</md-list>
+
+					<md-divider></md-divider>
+
+					<md-list>
+						<md-list-item to='/voti'>
+							<md-icon>poll</md-icon>
+							<span class="md-list-item-text">Top 10</span>
+						</md-list-item>
+					</md-list>
+
+					<md-divider></md-divider>
+
+					<md-list>
+						<md-list-item to='/credits'>
+							<md-icon>info</md-icon>
+							<span class="md-list-item-text">Contatti e info</span>
+						</md-list-item>
+					</md-list>
+
+					<md-divider></md-divider>
+					
+				</md-app-drawer>
+				
+				<md-app-content style="min-height: 80vh;">
+					<router-view></router-view>
+				</md-app-content>
+			</md-app>
+		</div>
+		<script src="https://unpkg.com/vue"></script>
+		<script src="https://unpkg.com/vue-material"></script>
+		<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+		<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+
+		<script>
+			$(".loader").fadeOut("");
+			var urlChampionsList = 'https://ddragon.leagueoflegends.com/cdn/10.16.1/data/it_IT/champion.json';
+			checkCookie();
+			$.get(urlChampionsList, function(data) {
+				var championsListAll = data.data;
+				var championsListFiltered = [];
+				var champions = [];
+				for(name in championsListAll) {
+					var values = championsListAll[name];
+					var championItem = {};
+					championItem['id'] = values.id;
+					championItem['name'] = values.name;
+					championItem['title'] = values.title;
+					championItem['image'] = championImageUrl + values.image.full;
+					championItem['tags'] = values.tags;
+					
+					championsListFiltered.push(championItem);
+					champions.push(values.name);
+				}
+				const ChampListComp = {
+					template: 
+						'<div>' +
+							'<md-toolbar class="md-primary" > ' +
+								'<md-autocomplete class="search" v-model="selectedChampion" '+
+									':md-options="champions" md-layout="box" @md-selected="searchChampion" @md-changed="resetSearchChampion"> ' +
+									'<md-icon>search</md-icon>'+
+								'</md-autocomplete> ' +
+							'</md-toolbar> ' +
+							'<md-card v-for="champion in championsList" :key="champion.name" md-with-hover> '+ 
+								'<div @click="openChampionPage(champion.id)"> ' +
+									'<md-card-media> ' +
+										'<img v-bind:src="champion.image" v-bind:alt="champion.name"> ' +
+									'</md-card-media> ' +
+									'<md-card-header> ' +
+										'<div class="md-title">{{ champion.name }}</div> ' +
+										'<div class="md-subhead">{{ champion.title }}</div> ' +
+									'</md-card-header> ' +
+								'</div> ' +
+							'</md-card> ' +
+						'</div>',
+					data: function() {
+						return {
+							allChampionsList: championsListFiltered,
+							championsList: championsListFiltered,
+							selectedChampion: null,
+							champions: champions,
+							tag: null
+						}
+					},
+					methods: {
+						openChampionPage: openChampionPage,
+						searchChampion: searchChampion,
+						resetSearchChampion: resetSearchChampion
+					},
+					beforeRouteEnter (to, from, next) {
+						next(vm => {
+							if(to.params.tag) {
+								vm.$root.title = (to.params.tag).charAt(0).toUpperCase() + (to.params.tag).slice(1);
+							} else {
+								vm.$root.title = 'Tutti i campioni';
+							}
+							vm.$data.tag = to.params.tag;
+							vm.$data.championsList = filterChampionsList(to.params.tag, vm.$data.allChampionsList);
+							vm.$data.champions = getChampionsNameList(vm.$data.championsList);
+						})
+					},
+					beforeRouteUpdate (to, from, next) {
+						if(to.params.tag) {
+							this.$root.title = (to.params.tag).charAt(0).toUpperCase() + (to.params.tag).slice(1);
+						} else {
+							this.$root.title = 'Tutti i campioni';
+						}
+						this.$data.tag = to.params.tag;
+						this.$data.championsList = filterChampionsList(to.params.tag, this.$data.allChampionsList);
+						this.$data.champions = getChampionsNameList(this.$data.championsList);
+						next();
+					}
+				}
+				const Champion = {
+					template: 
+						'<div layout="row"> ' +
+							'<md-card class="md-card-champ-view" class="md-card-champ-view"> '+
+								'<md-card-header> ' +
+									'<md-card-media md-big class="md-image-mobile"> ' +
+										'<img v-bind:src="$route.params.champData.imageFullPath" v-bind:alt="$route.params.champData.name"> ' +
+									'</md-card-media> ' +
+									'<md-card-header-text class="champ-header"> ' +
+										'<div class="md-title">{{$route.params.champData.name}}</div> ' +
+										'<div class="md-subhead">{{$route.params.champData.title}}</div> ' +
+										'<div class="md-subhead">{{$route.params.champData.tags}}</div> ' +
+										'<star-rating v-bind:star-size="30" v-model="rating" @rating-selected ="saveVoto"></star-rating>' +
+										'<div id="champion-voto-text"></div> ' +
+									'</md-card-header-text> ' +
+								'</md-card-header> ' +
+								'<md-card-content class="md-card-champ-text"> ' +
+									'<p style="padding-top:5px;"></p>'+
+									'<br><br><br> ' +
+									'<b>INFO</b><br> ' +
+									'{{$route.params.champData.lore}}' +
+									'<br><br><br> ' +								
+									'<b>Statistiche</b><br> ' +
+									'<div v-for="(value, name) in $route.params.champData.info"> ' +
+										'<div class="info-bar-div">{{name.charAt(0).toUpperCase() + name.slice(1)}}:</div> ' +
+										'<md-progress-bar md-mode="determinate" :md-value="value * 10" class="info-bar"></md-progress-bar> ' +
+										'<div class="info-bar-div">{{value}}/10</div> ' +
+									'</div> ' +
+								'</md-card-content> ' +
+							'</md-card> ' +
+						'</div>',
+					data: function() {
+						return {
+							rating: null,
+							champName: '',
+							champData: null
+						}
+					},
+					methods: {
+						saveVoto: saveVoto
+					},
+					beforeRouteEnter (to, from, next) {
+						next(vm => {
+							vm.$root.title = to.params.champName;
+							vm.$data.champName = to.params.champName;
+							vm.$data.rating = to.params.rating;
+						})
+					},
+					beforeRouteUpdate (to, from, next) {
+						this.$root.title = to.params.champName;
+						this.$data.champName = to.params.champName;
+						this.$data.rating = to.params.rating;
+						next();
+					}
+				}
+				const Credits = {
+					template:
+					'<div class="viewport">'+
+						'<md-list>'+
+							'<md-subheader class="md-primary">Contatti</md-subheader>'+
+							'<md-list-item>'+
+								'<md-avatar class="md-avatar-icon md-large md-accent">'+
+									'<img src="assets/monica.jpg" alt="img_monica">'+
+								'</md-avatar>'+
+								'<span class="md-headline">Monica Pietroboni</span>'+
+								'<md-button class="md-primary"></md-button>'+
+							'</md-list-item>'+
+							'<p style="padding-top:15px;"></p>'+
+							'<md-divider class="md-inset"></md-divider>'+
+							'<p style="padding-top:20px;"></p>'+
+							'<md-card class="md-card-info">'+
+								'<md-card-content class="md-text-size">'+
+									'Studentessa di Interfacce e Tecnologie della Comunicazione'+
+								'</md-card-content>'+
+							'</md-card>'+
+							'<form novalidate class="md-layout" @submit.prevent="inviaEmail"> ' +
+								'<md-card class="md-card-info"> ' +
+									'<md-card-header> ' +
+										'<div class="md-title">Contattaci</div> ' +
+									'</md-card-header> ' +
+									'<md-card-content> ' +
+										'<div class="md-layout md-gutter"> ' +
+											'<div class="md-layout-item"> ' +
+												'<md-field> ' +
+													'<label for="nome">Nome</label> ' +
+													'<md-input name="nome" id="nome" v-model="form.nome" :disabled="sending" /> ' +
+												'</md-field> ' +
+											'</div> ' +
+											'<div class="md-layout-item"> ' +
+												'<md-field> ' +
+													'<label for="cognome">Cognome</label> ' +
+													'<md-input name="cognome" id="cognome" v-model="form.cognome" :disabled="sending" /> ' +
+												'</md-field> ' +
+											'</div> ' +
+											'<div class="md-layout-item"> ' +
+												'<md-field> ' +
+													'<label for="email">Email</label> ' +
+													'<md-input name="email" id="email" v-model="form.email" :disabled="sending" /> ' +
+												'</md-field> ' +
+											'</div> ' +
+											'<div class="md-layout-item"> ' +
+												'<md-field> ' +
+													'<label for="test">Testo</label> ' +
+													'<md-textarea name="testo" id="testo" v-model="form.testo" md-autogrow :disabled="sending"></md-textarea> ' +
+												'</md-field> ' +
+											'</div> ' +
+										'</div> ' +
+									'</md-card-content> ' +
+									'<md-progress-bar md-mode="indeterminate" v-if="sending" /> ' +
+									'<md-card-actions> ' +
+										'<md-button type="submit" class="md-primary" :disabled="sending">Invia mail</md-button> ' +
+									'</md-card-actions> ' +
+								'</md-card> ' +
+								'<md-card class="md-card-info">'+
+								'<md-card-content class="md-text-size">'+
+									'<a href="mailto:monica.pietroboni@gmail.com">monica.pietroboni@gmail.com</a>'+
+									'<br><br><br> ' +
+									'Tel.+39 349 3680454'+
+								'</md-card-content>'+
+								'</md-card>'+
+								'<md-snackbar :md-active.sync="mailInviata">Mail inviata con successo!</md-snackbar> ' +
+								'<md-snackbar :md-active.sync="testoNonCompilato">Tutti i campi sono obbligatori!</md-snackbar> ' +
+							'</form> ' +
+						'</md-list>'+
+					'</div>',
+					data: function() {
+						return {
+							form: {
+								nome: null,
+								cognome: null,
+								email: null,
+								testo: null
+							},
+							sending: false,
+							mailInviata: false,
+							testoNonCompilato: false
+						}
+					},
+					methods: {
+						inviaEmail: function() {
+							if(this.form.nome && this.form.cognome && this.form.email && this.form.testo) {
+								this.mailInviata = true,
+								this.testoNonCompilato = false
+							} else {
+								this.mailInviata = false,
+								this.testoNonCompilato = true
+							}
+						}
+					},
+					beforeRouteEnter (to, from, next) {
+						next(vm => {
+							vm.$root.title = 'Info';
+						})
+					},
+				}
+				
+				const RatingTable = {
+					template:
+						'<div> ' +
+							'<md-table> ' +
+								'<md-table-row> ' +
+									'<md-table-head>Champion</md-table-head> ' +
+									'<md-table-head>Num Voti</md-table-head> ' +
+									'<md-table-head>Max Voto</md-table-head> ' +
+									'<md-table-head>Min Voto</md-table-head> ' +
+									'<md-table-head>Media</md-table-head> ' +
+								'</md-table-row> ' +
+								'<md-table-row v-for="champion in championsStatList.slice(0, 10)" :key="champion.name"> ' +
+									'<md-table-cell> {{champion.name}} </md-table-cell> ' +
+									'<md-table-cell> {{champion.numVoti}} </md-table-cell> ' +
+									'<md-table-cell> {{champion.maxVoto}} </md-table-cell> ' +
+									'<md-table-cell> {{champion.minVoto}} </md-table-cell> ' +
+									'<md-table-cell> {{champion.media}} </md-table-cell> ' +
+								'</md-table-row> ' +
+							'</md-table> ' +
+						'</div>',
+					data: function() {
+						return {
+							championsStatList: []
+						}
+					},
+					beforeRouteEnter (to, from, next) {
+						next(vm => {
+							vm.$data.championsStatList = getMaxRatedChampions();
+							vm.$root.title = 'Top 10';
+						})
+					},
+				}
+
+				const routes = [{
+					path: '/',
+					component: ChampListComp
+				}, {
+					path: '/champion/:champName',
+					component: Champion,
+					name: 'champion'
+				}, {
+					path: '/credits',
+					component: Credits
+				}, {
+					path: '/filteredList/:tag',
+					component: ChampListComp
+				}, {
+					path: '/voti',
+					component: RatingTable
+				}]
+				const router = new VueRouter({
+					routes
+				})
+				
+				Vue.use(VueMaterial.default);
+				Vue.use(VueRouter);
+				Vue.component('star-rating', VueStarRating.default);
+				const App = new Vue({
+					data: {
+						menuVisible: false,
+						title: ''
+					},
+					router,
+					created() {
+						$('#loading').hide();
+						this.$router.push({ path: '/' }).catch(()=>{});
+					}
+				}).$mount('#appDiv');
+			});
+		</script>
+	</body>
+</html>

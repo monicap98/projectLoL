@@ -1,0 +1,111 @@
+/* code by Leviner222 */
+
+.md-card {
+	width: 210px;
+	margin: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.info-bar {
+	width: 200px;
+	display: inline-block;
+}
+
+.info-bar-div {
+	width: 100px;
+	display: inline-block;
+}
+
+.champ-header{
+	margin: 10px;
+	position: relative;
+	 
+}
+
+.md-card-info {
+	width: 98%;
+	margin: 10px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.md-text-size {
+font-size: large;
+}
+
+.md-card-champ-view {
+	padding-right: 20%;
+	padding-left: 22%;
+	width: 98%;
+	vertical-align: top;
+	text-align: justify;
+
+}
+
+#loading {
+	width: 100%;
+	height: 98%;
+	position: fixed;
+	display: block;
+	background-color: #ffff;
+	z-index: 99;
+	text-align: center;
+  }
+  
+#loading-image {
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;  	
+	margin: auto;
+  }
+
+/* ottimizzazione per schermi piccoli */
+@media only screen and (max-width: 500px) 
+{
+.champ-header{
+	position: absolute;
+	padding-top: 150px;
+	}
+
+.md-card-champ-view {
+	min-width: 400px;
+	border-block: 0px;
+	vertical-align: top;
+	text-align: justify;
+	border-color: transparent;
+	}
+
+.md-mobile{
+	padding-top: 20%;
+	}
+	
+.md-card-info {
+	width: 98%;
+	margin: 10px;
+	vertical-align: top;
+	text-align: center;
+	min-width: 95%;
+}
+
+.md-card-champ-text{
+	margin-left: -10%;
+	text-align: justify;
+	max-width: 90%;
+	}
+
+.md-card-stars{
+	padding-top:200px;
+	}
+
+.md-image-mobile{
+	margin-left: -15%;
+	position: relative;
+	}
+
+.md-card {
+	width: 120px;
+	}
+}
